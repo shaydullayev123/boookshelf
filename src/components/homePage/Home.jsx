@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../images/logo.svg";
 import searchIcon from "../images/search-icon.svg";
@@ -8,13 +8,25 @@ import bell from "../images/bellIcon.svg";
 import profile from "../images/profile.svg";
 import plus from "../images/plusIcon.svg";
 import axios from "axios";
-import Books from "../books/Books";
+
+// import Books from "../books/Books";
+// import { useDispatch } from "react-redux";
+// import { searchBooks } from "../../redux/actions/booksAction";
 
 const Home = () => {
+  const [title, setTitle] = useState("");
+  const [gmail, setGmail] = useState("");
+  const [author, setAuthor] = useState("");
+  const [cover, setCover] = useState("");
+  const [published, setPublished] = useState("");
+  const [pages, setPages] = useState("");
+
+  // const dispatch = useDispatch();
   //axios error 401
+
   useEffect(() => {
     axios
-      .get("https://0001.uz/myself")
+      .get("https://0001.uz/books")
       .then((res) => console.log(res))
       .catch((e) => console.log("catch:" + e));
   });
@@ -22,9 +34,23 @@ const Home = () => {
     const input = document.querySelector("#input");
     input.value = "";
   };
-  const addBook = () => {
+
+  const submitBook = () => {
     const book = document.querySelector(".Book-Container");
     book.classList.add("addCreateBook");
+  };
+  const addBook = () => {
+    const booksData = {
+      title: title,
+      email: gmail,
+      author: author,
+      cover: cover,
+      published: published,
+      pages: pages,
+    };
+    axios
+      .post("https://0001.uz/books", booksData)
+      .then((res) => console.log(res));
   };
   const Close = () => {
     const exit = document.querySelector(".Book-Container");
@@ -39,10 +65,32 @@ const Home = () => {
           <div className="inputImg">
             <img className="search" src={searchIcon} alt="" />
             <input
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios
+                  .get("https://0001.uz/books/:title")
+                  .then((res) => console.log(res));
+              }}
               id="input"
               type="text"
               placeholder="Search for any training you want"
             />
+            {/* <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                dispatch(searchBooks(book));
+              }}
+              className="d-flex align-items-center"
+            >
+              <input
+                onChange={(e) => setbook(e.target.value)}
+                className="form-control"
+                type="text"
+                id="input"
+                placeholder="Search for any training you want"
+              />
+              <button className="btn btn-primary">Search</button>
+            </form> */}
             <img onClick={value} className="exit" src={exit} alt="" />
           </div>
         </div>
@@ -63,12 +111,12 @@ const Home = () => {
             <input type="text" placeholder="Enter your name" />
             <div>
               <img className="plus" src={plus} alt="" />
-              <button onClick={addBook}>Create a book</button>
+              <button onClick={submitBook}>Create a book</button>
             </div>
           </div>
         </div>
         <p>Your task today</p>
-        <Books />
+        {/* <Books /> */}
       </main>
       <CreateBook>
         <div className="Book-Container">
@@ -80,11 +128,17 @@ const Home = () => {
             <div className="inputs">
               <div className="input-title">
                 <label>Title</label>
-                <input type="text" name="name" placeholder="Enter your title" />
+                <input
+                  onChange={({ target }) => setTitle(target.value)}
+                  type="text"
+                  name="name"
+                  placeholder="Enter your title"
+                />
               </div>
               <div className="input-author">
                 <label>Author</label>
                 <input
+                  onChange={({ target }) => setAuthor(target.value)}
                   type="text"
                   name="author"
                   placeholder="Enter your author"
@@ -93,6 +147,7 @@ const Home = () => {
               <div className="input-cover">
                 <label>Cover</label>
                 <input
+                  onChange={({ target }) => setCover(target.value)}
                   type="text"
                   name="cover"
                   placeholder="Enter your cover"
@@ -101,6 +156,7 @@ const Home = () => {
               <div className="input-published">
                 <label>Published</label>
                 <input
+                  onChange={({ target }) => setPublished(target.value)}
                   type="password"
                   name="published"
                   placeholder="Enter your publishes"
@@ -109,6 +165,7 @@ const Home = () => {
               <div className="input-pages">
                 <label>Pages</label>
                 <input
+                  onChange={({ target }) => setPages(target.value)}
                   type="password"
                   name="pages"
                   placeholder="Enter your pages"
@@ -116,8 +173,8 @@ const Home = () => {
               </div>
             </div>
             <div className="btns">
-              <button>Close</button>
-              <button>Submit</button>
+              <button onClick={Close}>Close</button>
+              <button onClick={addBook}>Submit</button>
             </div>
           </div>
         </div>

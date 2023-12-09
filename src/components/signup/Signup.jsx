@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import google from "../images/googleIcon.svg";
 import facebook from "../images/faceBookIcon.svg";
+import { Link } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import { redirect } from "react-router-dom";
+
 const Signup = () => {
   const [name, setName] = useState("");
   const [gmail, setGmail] = useState("");
@@ -77,7 +81,10 @@ const Signup = () => {
           Button
         </button>
         <p>
-          Already signed up? <span>Go to sign in.</span>
+          Already signed up?{" "}
+          <span>
+            <Link to="/signin">Go to sign in.</Link>
+          </span>
         </p>
       </div>
     </Wrapper>

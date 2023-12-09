@@ -1,12 +1,25 @@
 import styled from "styled-components";
+import google from "../images/googleIcon.svg";
+import facebook from "../images/faceBookIcon.svg";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
 const Signin = () => {
+  const enterBtn = () => {
+    axios.get("https://0001.uz/myself").then((res) => console.log(res));
+  };
   return (
     <Wrapper>
       <div className="Container">
         <h1>Sign in</h1>
 
-        <button className="google">Continue with Google</button>
-        <button className="facebook">Continue with FaceBook</button>
+        <button className="google">
+          {" "}
+          <img src={google} alt="" /> Continue with Google
+        </button>
+        <button className="facebook">
+          <img src={facebook} alt="" /> Continue with FaceBook
+        </button>
         <div className="line">
           <span>OR</span>
         </div>
@@ -32,9 +45,14 @@ const Signin = () => {
             />
           </div>
         </div>
-        <button className="addBtn">Enter</button>
+        <button className="addBtn" onClick={enterBtn}>
+          Enter
+        </button>
         <p>
-          Already signed up? <span>Go to sign in.</span>
+          Yet signed up?
+          <span>
+            <Link to="/signup">Go to sign up.</Link>
+          </span>
         </p>
       </div>
     </Wrapper>
@@ -43,11 +61,11 @@ const Signin = () => {
 
 export default Signin;
 const Wrapper = styled.div`
-  padding-top: 10vw;
+  padding: 9vw;
   display: flex;
   justify-content: center;
   .Container {
-    width: 31vw;
+    width: 31vw; //430px
     top: 165px;
     left: 505px;
     padding: 3vw 2vw;
@@ -58,22 +76,27 @@ const Wrapper = styled.div`
     box-shadow: 0px 4px 32px 0px #3333332b;
 
     h1 {
-      font-family: Mulish;
+      font-family: "Mulish", sans-serif;
       font-size: 3vw;
       font-weight: 700;
       line-height: 45px;
       margin-bottom: 36px;
     }
     button {
-      width: 374px;
+      width: 26vw;
       height: 44px;
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-align: start;
+      font-family: "Mulish", sans-serif;
+      font-size: 1.1vw;
       background-color: #fff;
-      padding: 10px 24px;
       border-radius: 4px;
       border: 1px solid black;
-      font-family: "Mulish", sans-serif;
-      font-size: 1vw;
+      padding: 10px 0;
+      text: center;
+      padding-left: 5vw;
     }
     .google {
       margin-bottom: 16px;
@@ -105,7 +128,7 @@ const Wrapper = styled.div`
         font-size: 1vw;
       }
       input {
-        width: 374px;
+        width: 26vw;
         height: 47px;
         padding: 14px 16px;
         border-radius: 6px;
@@ -120,11 +143,13 @@ const Wrapper = styled.div`
     .addBtn {
       width: 100%;
       height: 40px;
-      padding: 10px 24px;
-      background-color: #6200ee;
+      display: block;
       color: #fff;
+      background-color: #6200ee;
       border-radius: 4px;
       font-size: 1vw;
+      text-align: center;
+      padding: 10px 24px;
       margin: 36px 0 12px 0;
     }
     p {
