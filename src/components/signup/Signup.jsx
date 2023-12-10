@@ -21,6 +21,14 @@ const Signup = () => {
       key: key,
       secret: secret,
     };
+
+    // Convert the data object to a JSON string
+    const dataString = JSON.stringify(data);
+
+    // Save the JSON string to localStorage
+    localStorage.setItem("myDataKey", dataString);
+
+    // Perform other actions as needed
     axios.post("https://0001.uz/signup", data).then((res) => console.log(res));
   };
 
